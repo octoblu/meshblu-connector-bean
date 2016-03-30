@@ -1,0 +1,54 @@
+language: shell
+sudo: required
+os:
+- linux
+- osx
+env:
+- CXX=g++-4.8
+addons:
+  code_climate:
+    repo_token: "d220cd4236a5f28ed7eaa865f718b4f81fa22d988644a89b3589bc019c70da1b"
+before_script:
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then npm install -g codeclimate-test-reporter; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test" fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install libbluetooth-dev libudev-dev g++-4.8 fi
+after_script:
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; codeclimate-test-reporter < coverage/lcov.info; fi
+before_install:
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install nvm; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then source $(brew --prefix nvm)/nvm.sh; fi
+- nvm install 5.5
+- npm install -g npm
+install:
+- npm install
+script:
+- if [ "$TRAVIS_OS_NAME" != "osx" ]; then npm test; fi
+before_script:
+- npm install -g codeclimate-test-reporter
+after_script:
+- codeclimate-test-reporter < coverage/lcov.info
+before_deploy:
+- curl -fsS https://meshblu-connector.octoblu.com/tools/packager/v4.0.0/build.sh -o .build.sh
+- chmod +x ./.build.sh
+- ./.build.sh bean ${TRAVIS_TAG:-$TRAVIS_COMMIT} $TRAVIS_OS_NAME
+deploy:
+- provider: s3
+  access_key_id: AKIAJH2D5IPIRHYJT5IA
+  secret_access_key:
+    secure: "efEQq0Ho/dnkhQGEOVC4H0YBhvDw8C6tRiM3EMfJ0t9gRbbF9JY9wgjp7bKL7Wp4qRHetr3DA3L/9Fe2YerhTDZvdRDgAF4lf+U6mEvoYvwYAEUO1K0/48d6bb7mEx6uPEvTQYjKq4jzU1H4un8559FYZDv2S7EHCIw5dFOBZCrtCgyuU6DaxZ8aMctahKEhnHoPlIfZvvP4GktUdkEiikbTBk05gUpNf2i8DpsXEt09gbJXlVxb+9DEao09xkrVVJEH2f91nFNGa/y0bpt2GhMAR1BhOkU/0SLMU8TV9VuwHwX+Glm4R+N/lDU6b+64SlN/Gw3K07VDpBzMoHVg0cIuKOyoaA65gL2HlHtiYa/XI4WVeXkUGa4m4MnkY1qGt6CZN6/a4Q0nKMGXCC2V2433YllPTyMAPhL9wec3+pcsH6C04kREjhi7ZADmdBiocTwQ9cggTAuJCwYJVBpFhXCGQa+YXdYdLmLl3RCjb8YJuZBMN3dWbxmyX4tbuAebyYM0jY96CP2TWzRtfJn/p34XqPkhfJE8shBlw9qsSI+PWCbaermXxlvqM1Mea6IqmTw8DneuVfZmi8uY+YplX7vZ9TP9TWCEOi2n7zA2OTT3/GcZWI3FzFOxAtSxY2LgCVF9LaCGcIbc16RrBL/yfBpNYxpwogI8UATn2Fy85sw="
+  bucket: meshblu-connector
+  local-dir: deploy
+  upload-dir: connectors
+  region: us-west-2
+  skip_cleanup: true
+  on:
+    tags: true
+    branches: true
+- provider: npm
+  email: serveradmin@octoblu.com
+  api_key:
+    secure: yp+gaExXvHlY5rpvq+4f1eySA2xHrr6RSNN2+HZFFYcR5Pb9lkYMQv9ydLbQwhHmDG1gFbV9cdmqtUMvnoKE3+6F7ztlJH3G2UeXtW6TlrJMq5+PJ+Eeeu6XX+FuLHKirMDO3fxGGCBMvrgMP4r/jsjaRbgzKQHI5BiGWN4+xBpseNPaG9+msp+GofVZAJikN7s6bIgR8SQbwHz56ZpThBWN3goKtOmwq0+FzDiIkrfGfjLxL57QSBwSurPhN2gclvuGn6HBJHV0oUT0WjVEA5oJCpQmtybjsezhJXvHwSIaLlIzAJ0Mw8wZr8fvUaYKaxVJM3WVv9763iGYNxXb/LKltsMkWp2cSHpDw5Fq6U5cD0bo6GBZYdNh3nXqKU+bfh7h+1GVwj4PhwISe0yXbU0uXaKDN3Fd3+1ls1RAd++a3suWKaJDe/W/REkkzZif3wrMfQ2z1uQ2byGJNeXeuKS0DiYg0H+U4eU8reIRsO1ByV4y+YUK74vIicp7qeibXDHJ8DfnBv7ErFdKskDQGTi7inQRRhp4PE3iOglq1hC3TEWEgkGOshp+cVOOWsniyWOSgA4Y9tSZBRnaPkw0XYvAiE0svop5BjxIrQAw8zCXHgcfN7SKOJs4bM3DwFKKk3gX+je3coyc3Y73goUyk1geAKX49bzssuNYmZjXRPo=
+  on:
+    condition: "$TRAVIS_OS_NAME = linux"
+    tags: true
+    branches: true

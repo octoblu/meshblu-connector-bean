@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ -z "$DEBUG" ]; then
+  export DEBUG='meshblu-connector*'
+fi
+
+node ./node_modules/.bin/meshblu-connector-runner .
