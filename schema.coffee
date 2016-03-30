@@ -1,6 +1,6 @@
 packageJSON = require './package.json'
 
-return {
+module.exports = {
   initializing: false
   currentVersion: packageJSON.version
   messageSchema:

@@ -1,14 +1,17 @@
 {EventEmitter2} = require 'eventemitter2'
-schema          = require './schema'
+SCHEMA          = require './schema'
 tinycolor       = require 'tinycolor2'
-Bean            = require '@octoblu/ble-bean'
+BLEBean            = require '@octoblu/ble-bean'
 _               = require 'lodash'
 debug           = require('debug')('meshblu-connector-bean:index')
 
 class Bean extends EventEmitter2
-  constructor: (@device) ->
+  constructor: ->
     debug 'Bean constructed'
-    @emit 'update', schema
+
+  start: (device) =>
+    @emit 'update', SCHEMA
+    @setOptions device.options
 
   didBeanChange: (bean) =>
     return false unless bean?
@@ -16,10 +19,10 @@ class Bean extends EventEmitter2
 
   getBean: (callback=->) =>
     return callback(null, @_bean) if @didBeanChange(@_bean)
-    Bean.is = (peripheral) =>
+    BLEBean.is = (peripheral) =>
       peripheral.advertisement.localName == @options.localName
 
-    Bean.discover (bean) =>
+    BLEBean.discover (bean) =>
       bean.connectAndSetup =>
         @_bean = bean
         callback(null, bean)
@@ -33,6 +36,7 @@ class Bean extends EventEmitter2
     @setOptions device.options
 
   setOptions: (@options={}) =>
+    @options.localName = 'hello'
     debug 'setOptions', @options
     @disconnectBean() if @_oldBeanName == @options.localName
     @_oldBeanName = @options.localName
