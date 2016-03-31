@@ -1,7 +1,7 @@
 {EventEmitter2} = require 'eventemitter2'
 SCHEMA          = require './schema'
 tinycolor       = require 'tinycolor2'
-BLEBean            = require '@octoblu/ble-bean'
+BLEBean         = require '@octoblu/ble-bean'
 _               = require 'lodash'
 debug           = require('debug')('meshblu-connector-bean:index')
 

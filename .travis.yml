@@ -3,7 +3,7 @@ os:
 - linux
 - osx
 env:
-- NODE_VERSION="5.5"
+- NODE_VERSION="0.10"
 addons:
   apt:
     sources:
