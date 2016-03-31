@@ -9,16 +9,18 @@ addons:
     sources:
     - ubuntu-toolchain-r-test
     packages:
+    - g++-4.8
+    - g++-4.8-multilib
+    - gcc-multilib
     - build-essential
     - libbluetooth-dev
     - libudev-dev
     - libusb-1.0-0-dev
-    - g++-4.8
   code_climate:
     repo_token: "d220cd4236a5f28ed7eaa865f718b4f81fa22d988644a89b3589bc019c70da1b"
 before_install:
-- if [ $TRAVIS_OS_NAME == "linux" ]; then export CC="g++-4.8"; fi
 - if [ $TRAVIS_OS_NAME == "linux" ]; then export CXX="g++-4.8"; fi
+- $CXX --version
 - git clone https://github.com/creationix/nvm.git /tmp/.nvm;
 - source /tmp/.nvm/nvm.sh;
 - nvm install $NODE_VERSION;
