@@ -26,7 +26,7 @@ before_install:
 - nvm install $NODE_VERSION;
 - nvm use --delete-prefix $NODE_VERSION;
 install:
-- npm install
+- npm install --build-from-source
 before_script:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then npm install -g codeclimate-test-reporter; fi
 script:
