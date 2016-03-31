@@ -27,7 +27,7 @@ before_install:
 install:
 - npm install
 before_script:
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then npm install -g codeclimate-test-reporter fi;
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then npm install -g codeclimate-test-reporter; fi
 script:
 - npm test
 after_script:
