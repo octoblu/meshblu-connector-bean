@@ -1,17 +1,21 @@
-language: cpp
 sudo: required
+language: cpp
 os:
 - linux
 - osx
 env:
 - CXX=g++-4.8
 addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - libbluetooth-dev
+    - libudev-dev
+    - g++-4.8
   code_climate:
     repo_token: "d220cd4236a5f28ed7eaa865f718b4f81fa22d988644a89b3589bc019c70da1b"
 before_install:
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then npm install -g codeclimate-test-reporter; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test" fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install libbluetooth-dev libudev-dev g++-4.8 fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew tap homebrew/science; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install opencv; fi
