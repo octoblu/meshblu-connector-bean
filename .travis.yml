@@ -3,7 +3,7 @@ os:
 - linux
 - osx
 env:
-- NODE_VERSION="0.10"
+- NODE_VERSION="5.5"
 addons:
   apt:
     sources:
@@ -25,7 +25,6 @@ before_install:
 - source /tmp/.nvm/nvm.sh;
 - nvm install $NODE_VERSION;
 - nvm use --delete-prefix $NODE_VERSION;
-- npm install --global npm@latest-2
 install:
 - npm install
 before_script:
