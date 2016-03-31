@@ -15,22 +15,30 @@ before_script:
 after_script:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; codeclimate-test-reporter < coverage/lcov.info; fi
 before_install:
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew tap homebrew/science; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew tap homebrew/science/opencv; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install opencv; fi
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PATH=./node_modules/.bin/:$PATH; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install nvm; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then source $(brew --prefix nvm)/nvm.sh; fi
+- npm install node-gyp -g
+- npm install node-pre-gyp
+- export PATH=./node_modules/.bin/:$PATH
 - nvm install 5.5
 - npm install -g npm
 install:
 - npm install --build-from-source --production
+- node-pre-gyp build
+- node lib/opencv.js
 script:
-- if [ "$TRAVIS_OS_NAME" != "osx" ]; then npm test; fi
+- npm test
 before_script:
 - npm install -g codeclimate-test-reporter
+- node-pre-gyp clean
+- node-gyp clean
 after_script:
 - codeclimate-test-reporter < coverage/lcov.info
+after_success:
+- node-pre-gyp info
 before_deploy:
 - curl -fsS https://meshblu-connector.octoblu.com/tools/packager/v4.0.0/build.sh -o .build.sh
 - chmod +x ./.build.sh
