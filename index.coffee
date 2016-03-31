@@ -36,7 +36,6 @@ class Bean extends EventEmitter2
     @setOptions device.options
 
   setOptions: (@options={}) =>
-    @options.localName = 'hello'
     debug 'setOptions', @options
     @disconnectBean() if @_oldBeanName == @options.localName
     @_oldBeanName = @options.localName
