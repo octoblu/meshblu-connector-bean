@@ -3,7 +3,6 @@ os:
 - linux
 - osx
 env:
-- CXX=g++-4.8
 - NODE_VERSION="0.10"
 addons:
   apt:
@@ -16,12 +15,13 @@ addons:
   code_climate:
     repo_token: "d220cd4236a5f28ed7eaa865f718b4f81fa22d988644a89b3589bc019c70da1b"
 before_install:
+- if [ $TRAVIS_OS_NAME == "linux" ]; then export CC="g++-4.8"; fi
+- if [ $TRAVIS_OS_NAME == "linux" ]; then export CXX="g++-4.8"; fi
 - git clone https://github.com/creationix/nvm.git /tmp/.nvm;
 - source /tmp/.nvm/nvm.sh;
 - nvm install $NODE_VERSION;
 - nvm use --delete-prefix $NODE_VERSION;
-- if [ $TRAVIS_OS_NAME == "linux" ]; then export CC="g++-4.8"; fi
-- npm install --global npm@2-latest
+- npm install --global npm@latest-2
 install:
 - npm install
 before_script:
