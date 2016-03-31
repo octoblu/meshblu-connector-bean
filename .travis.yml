@@ -25,7 +25,6 @@ before_install:
 - npm install -g npm
 install:
 - npm install --production
-- node lib/opencv.js
 script:
 - npm test
 before_script:

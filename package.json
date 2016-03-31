@@ -1,6 +1,6 @@
 {
   "name": "meshblu-connector-bean",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Meshblu connector bean",
   "main": "index.js",
   "scripts": {
