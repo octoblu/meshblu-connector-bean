@@ -3,12 +3,15 @@ os:
 - linux
 - osx
 env:
+- CXX=g++-4.8
 - NODE_VERSION="0.10"
 addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
     packages:
+    - libbluetooth-dev
+    - libudev-dev
     - g++-4.8
   code_climate:
     repo_token: "d220cd4236a5f28ed7eaa865f718b4f81fa22d988644a89b3589bc019c70da1b"
