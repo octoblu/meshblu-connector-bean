@@ -1,4 +1,4 @@
-language: shell
+language: cpp
 sudo: required
 os:
 - linux
@@ -15,12 +15,16 @@ before_script:
 after_script:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; codeclimate-test-reporter < coverage/lcov.info; fi
 before_install:
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew tap homebrew/science; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install opencv; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PATH=./node_modules/.bin/:$PATH; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install nvm; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then source $(brew --prefix nvm)/nvm.sh; fi
 - nvm install 5.5
 - npm install -g npm
 install:
-- npm install
+- npm install --build-from-source --production
 script:
 - if [ "$TRAVIS_OS_NAME" != "osx" ]; then npm test; fi
 before_script:
