@@ -20,25 +20,18 @@ before_install:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install opencv; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install nvm; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then source $(brew --prefix nvm)/nvm.sh; fi
-- npm install node-gyp -g
-- npm install node-pre-gyp
 - export PATH=./node_modules/.bin/:$PATH
 - nvm install 5.5
 - npm install -g npm
 install:
-- npm install --build-from-source --production
-- node-pre-gyp build
+- npm install --production
 - node lib/opencv.js
 script:
 - npm test
 before_script:
 - npm install -g codeclimate-test-reporter
-- node-pre-gyp clean
-- node-gyp clean
 after_script:
 - codeclimate-test-reporter < coverage/lcov.info
-after_success:
-- node-pre-gyp info
 before_deploy:
 - curl -fsS https://meshblu-connector.octoblu.com/tools/packager/v4.0.0/build.sh -o .build.sh
 - chmod +x ./.build.sh
