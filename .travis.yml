@@ -15,7 +15,7 @@ before_script:
 after_script:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; codeclimate-test-reporter < coverage/lcov.info; fi
 before_install:
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew tap homebrew/science/opencv; fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew tap homebrew/science; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install opencv; fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install nvm; fi
@@ -24,7 +24,7 @@ before_install:
 - nvm install 5.5
 - npm install -g npm
 install:
-- npm install --production
+- npm install
 script:
 - npm test
 before_script:
