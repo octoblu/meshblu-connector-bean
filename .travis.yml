@@ -23,7 +23,7 @@ matrix:
   - os: osx
     env: PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="386"
 before_install:
-- curl -fsS "https://meshblu-connector.octoblu.com/tools/packager/v6.0.6/travis_install_node.sh" | bash
+- curl -fsS "https://meshblu-connector.octoblu.com/tools/packager/v6.0.7/travis_install_node.sh" | bash
 install:
 - npm install --build-from-source
 before_script:
@@ -38,7 +38,7 @@ before_deploy:
 - if [ "$TRAVIS_OS_NAME" == "linux" && "$MAIN_BUILD" == "true" ]; then export NPM_PUBLISH=true; fi
 - export PACKAGER_CONNECTOR="$(echo "$TRAVIS_REPO_SLUG" | sed 's/^[A-Za-z0-9]*\/meshblu-connector-//g')"
 - export PACKAGER_TAG="$TRAVIS_TAG"
-- curl -fsS "https://meshblu-connector.octoblu.com/tools/packager/v6.0.6/build.sh" | bash
+- curl -fsS "https://meshblu-connector.octoblu.com/tools/packager/v6.0.7/build.sh" | bash
 code_climate:
   repo_token: "d220cd4236a5f28ed7eaa865f718b4f81fa22d988644a89b3589bc019c70da1b"
 deploy:
