@@ -2,8 +2,6 @@ language: cpp
 os:
 - linux
 - osx
-env:
-- NODE_VERSION="5.5"
 addons:
   apt:
     sources:
@@ -16,27 +14,41 @@ addons:
     - libbluetooth-dev
     - libudev-dev
     - libusb-1.0-0-dev
-  code_climate:
-    repo_token: "d220cd4236a5f28ed7eaa865f718b4f81fa22d988644a89b3589bc019c70da1b"
+env:
+  matrix:
+  - PACKAGER_NODE_VERSION="0.10" PACKAGER_ARCH="amd64"
+  - PACKAGER_NODE_VERSION="0.10" PACKAGER_ARCH="386"
+  - PACKAGER_NODE_VERSION="0.12" PACKAGER_ARCH="amd64"
+  - PACKAGER_NODE_VERSION="0.12" PACKAGER_ARCH="386"
+  - PACKAGER_NODE_VERSION="4" PACKAGER_ARCH="amd64"
+  - PACKAGER_NODE_VERSION="4" PACKAGER_ARCH="386"
+  - PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="amd64" MAIN_BUILD=true
+  - PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="386"
+matrix:
+  exclude:
+  - os: osx
+    env: PACKAGER_NODE_VERSION="0.10" PACKAGER_ARCH="386"
+  - os: osx
+    env: PACKAGER_NODE_VERSION="0.12" PACKAGER_ARCH="386"
+  - os: osx
+    env: PACKAGER_NODE_VERSION="4" PACKAGER_ARCH="386"
+  - os: osx
+    env: PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="386"
 before_install:
-- if [ $TRAVIS_OS_NAME == "linux" ]; then export CXX="g++-4.8"; fi
-- $CXX --version
-- git clone https://github.com/creationix/nvm.git /tmp/.nvm;
-- source /tmp/.nvm/nvm.sh;
-- nvm install $NODE_VERSION;
-- nvm use --delete-prefix $NODE_VERSION;
+- curl -fsS "https://meshblu-connector.octoblu.com/tools/packager/v6.0.2/travis_install_node.sh" | bash
 install:
 - npm install --build-from-source
-before_script:
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then npm install -g codeclimate-test-reporter; fi
 script:
 - npm test
-after_script:
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then codeclimate-test-reporter < coverage/lcov.info; fi
 before_deploy:
-- curl -fsS https://meshblu-connector.octoblu.com/tools/packager/v4.0.0/build.sh -o .build.sh
-- chmod +x ./.build.sh
-- ./.build.sh bean ${TRAVIS_TAG:-$TRAVIS_COMMIT} $TRAVIS_OS_NAME
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PACKAGER_OS="darwin"; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then export PACKAGER_OS="linux"; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" && "$MAIN_BUILD" == "true" ]; then export NPM_PUBLISH=true; fi
+- export PACKAGER_CONNECTOR="bean"
+- export PACKAGER_TAG="$TRAVIS_TAG"
+- curl -fsS "https://meshblu-connector.octoblu.com/tools/packager/v6.0.2/build.sh" | bash
+code_climate:
+  repo_token: "d220cd4236a5f28ed7eaa865f718b4f81fa22d988644a89b3589bc019c70da1b"
 deploy:
 - provider: s3
   access_key_id: AKIAJH2D5IPIRHYJT5IA
@@ -49,12 +61,10 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    branches: true
 - provider: npm
   email: serveradmin@octoblu.com
   api_key:
     secure: yp+gaExXvHlY5rpvq+4f1eySA2xHrr6RSNN2+HZFFYcR5Pb9lkYMQv9ydLbQwhHmDG1gFbV9cdmqtUMvnoKE3+6F7ztlJH3G2UeXtW6TlrJMq5+PJ+Eeeu6XX+FuLHKirMDO3fxGGCBMvrgMP4r/jsjaRbgzKQHI5BiGWN4+xBpseNPaG9+msp+GofVZAJikN7s6bIgR8SQbwHz56ZpThBWN3goKtOmwq0+FzDiIkrfGfjLxL57QSBwSurPhN2gclvuGn6HBJHV0oUT0WjVEA5oJCpQmtybjsezhJXvHwSIaLlIzAJ0Mw8wZr8fvUaYKaxVJM3WVv9763iGYNxXb/LKltsMkWp2cSHpDw5Fq6U5cD0bo6GBZYdNh3nXqKU+bfh7h+1GVwj4PhwISe0yXbU0uXaKDN3Fd3+1ls1RAd++a3suWKaJDe/W/REkkzZif3wrMfQ2z1uQ2byGJNeXeuKS0DiYg0H+U4eU8reIRsO1ByV4y+YUK74vIicp7qeibXDHJ8DfnBv7ErFdKskDQGTi7inQRRhp4PE3iOglq1hC3TEWEgkGOshp+cVOOWsniyWOSgA4Y9tSZBRnaPkw0XYvAiE0svop5BjxIrQAw8zCXHgcfN7SKOJs4bM3DwFKKk3gX+je3coyc3Y73goUyk1geAKX49bzssuNYmZjXRPo=
   on:
-    condition: "$TRAVIS_OS_NAME = linux"
     tags: true
-    branches: true
+    condition: "$NPM_PUBLISH=true"
