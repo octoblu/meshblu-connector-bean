@@ -28,7 +28,7 @@ before_install:
 - curl -fsS "${PACKAGER_URL}/build.sh" -o /tmp/build.sh
 - chmod +x /tmp/travis_install_node.sh
 - chmod +x /tmp/build.sh
-- /tmp/travis_install_node.sh
+- . /tmp/travis_install_node.sh
 install:
 - npm install --build-from-source
 script:
