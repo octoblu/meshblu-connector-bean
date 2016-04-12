@@ -36,7 +36,7 @@ script:
 before_deploy:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PACKAGER_OS="darwin"; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export PACKAGER_OS="linux"; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" && "$MAIN_BUILD" == "true" ]; then export NPM_PUBLISH=true; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" -a "$MAIN_BUILD" == "true" ]; then export NPM_PUBLISH=true; fi
 - export PACKAGER_CONNECTOR="$(echo "$TRAVIS_REPO_SLUG" | sed 's/^[A-Za-z0-9]*\/meshblu-connector-//g')"
 - export PACKAGER_TAG="$TRAVIS_TAG"
 - . /tmp/build.sh
@@ -52,10 +52,12 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
+    branches: true
 - provider: npm
   email: serveradmin@octoblu.com
   api_key:
     secure: yp+gaExXvHlY5rpvq+4f1eySA2xHrr6RSNN2+HZFFYcR5Pb9lkYMQv9ydLbQwhHmDG1gFbV9cdmqtUMvnoKE3+6F7ztlJH3G2UeXtW6TlrJMq5+PJ+Eeeu6XX+FuLHKirMDO3fxGGCBMvrgMP4r/jsjaRbgzKQHI5BiGWN4+xBpseNPaG9+msp+GofVZAJikN7s6bIgR8SQbwHz56ZpThBWN3goKtOmwq0+FzDiIkrfGfjLxL57QSBwSurPhN2gclvuGn6HBJHV0oUT0WjVEA5oJCpQmtybjsezhJXvHwSIaLlIzAJ0Mw8wZr8fvUaYKaxVJM3WVv9763iGYNxXb/LKltsMkWp2cSHpDw5Fq6U5cD0bo6GBZYdNh3nXqKU+bfh7h+1GVwj4PhwISe0yXbU0uXaKDN3Fd3+1ls1RAd++a3suWKaJDe/W/REkkzZif3wrMfQ2z1uQ2byGJNeXeuKS0DiYg0H+U4eU8reIRsO1ByV4y+YUK74vIicp7qeibXDHJ8DfnBv7ErFdKskDQGTi7inQRRhp4PE3iOglq1hC3TEWEgkGOshp+cVOOWsniyWOSgA4Y9tSZBRnaPkw0XYvAiE0svop5BjxIrQAw8zCXHgcfN7SKOJs4bM3DwFKKk3gX+je3coyc3Y73goUyk1geAKX49bzssuNYmZjXRPo=
   on:
     tags: true
-    condition: "$NPM_PUBLISH=true"
+    condition: "$NPM_PUBLISH == true"
+    branches: true
