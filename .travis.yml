@@ -23,12 +23,12 @@ matrix:
   - os: osx
     env: PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="386"
 before_install:
-- PACKAGER_URL="https://meshblu-connector.octoblu.com/tools/packager/v6.0.14"
+- PACKAGER_URL="https://meshblu-connector.octoblu.com/tools/packager/v6.0.15"
 - curl -fsS "${PACKAGER_URL}/travis_install_node.sh" -o /tmp/travis_install_node.sh
 - curl -fsS "${PACKAGER_URL}/build.sh" -o /tmp/build.sh
 - chmod +x /tmp/travis_install_node.sh
 - chmod +x /tmp/build.sh
-- . /tmp/travis_install_node.sh
+- /tmp/travis_install_node.sh
 install:
 - npm install --build-from-source
 script:
@@ -40,7 +40,6 @@ before_deploy:
 - export PACKAGER_CONNECTOR="$(echo "$TRAVIS_REPO_SLUG" | sed 's/^[A-Za-z0-9]*\/meshblu-connector-//g')"
 - export PACKAGER_TAG="$TRAVIS_TAG"
 - /tmp/build.sh
-- echo "done building"
 deploy:
 - provider: s3
   access_key_id: AKIAJH2D5IPIRHYJT5IA
@@ -57,7 +56,7 @@ deploy:
 - provider: npm
   email: serveradmin@octoblu.com
   api_key:
-    secure: yp+gaExXvHlY5rpvq+4f1eySA2xHrr6RSNN2+HZFFYcR5Pb9lkYMQv9ydLbQwhHmDG1gFbV9cdmqtUMvnoKE3+6F7ztlJH3G2UeXtW6TlrJMq5+PJ+Eeeu6XX+FuLHKirMDO3fxGGCBMvrgMP4r/jsjaRbgzKQHI5BiGWN4+xBpseNPaG9+msp+GofVZAJikN7s6bIgR8SQbwHz56ZpThBWN3goKtOmwq0+FzDiIkrfGfjLxL57QSBwSurPhN2gclvuGn6HBJHV0oUT0WjVEA5oJCpQmtybjsezhJXvHwSIaLlIzAJ0Mw8wZr8fvUaYKaxVJM3WVv9763iGYNxXb/LKltsMkWp2cSHpDw5Fq6U5cD0bo6GBZYdNh3nXqKU+bfh7h+1GVwj4PhwISe0yXbU0uXaKDN3Fd3+1ls1RAd++a3suWKaJDe/W/REkkzZif3wrMfQ2z1uQ2byGJNeXeuKS0DiYg0H+U4eU8reIRsO1ByV4y+YUK74vIicp7qeibXDHJ8DfnBv7ErFdKskDQGTi7inQRRhp4PE3iOglq1hC3TEWEgkGOshp+cVOOWsniyWOSgA4Y9tSZBRnaPkw0XYvAiE0svop5BjxIrQAw8zCXHgcfN7SKOJs4bM3DwFKKk3gX+je3coyc3Y73goUyk1geAKX49bzssuNYmZjXRPo=
+    secure: "hNjcxygKPfY/Nw9KQXtERyjx9AWBTWQiCrpUjXccK+KTW83CIE8mAHYZiXO7ZLiMxgj35hB/mu85pravrupgGhkv/mMi8ryz9q4V4dRDg55lGO0XTEemX+ReLmdR5zIY9DKMN9YXHFnX5xtmf/IhsJ9QnJojNaVstA2R750XcQKJmVcnsI/u2wFWx0Z09/VxGK/HKm0kYJDUCVdOE19QQGVnyAyWV4208NCHP3jmByf1JhYkQbQXnD8eijdO8HqnE2Ss19+dalRtzc9PkYxH9oXUuKMgjDLz3ngMWCFBJPiNpptW8ABs/d5vu8OFJknPwoDOQ/AEDqSSulrIEjhdkdTSQZgfKQajCVCdV2Jotao3iOamGRxkVsSDnbQ416DKPtfVRYNeK+wksWk+oU20x2aKeGbVitjYOnLE5LdUNlAEH9omdexHchQYSvznk+dZRGLrdD4Eiy/zWApVmGx2G1tl12rH1ogS0ONbSIE/c65jAxgBv1qh8xWPZukb1sTMYkw9rRqcotyWoTeL5Q6exlpMQljUwwARXiGp78bgT8DKHj4KFHvNM+Mqutt91Z4YC2Tp6NHZXylc6JmTWPSr2xdn43WECbl/9UZv2E3t0Sd8pslKxoqHQ9Z7utHVrAX22vZOs2Lt9d9grdnxHWMvK60u/kT7g3PDG6RDpXV1ldY="
   on:
     tags: true
     condition: "$NPM_PUBLISH == true"
