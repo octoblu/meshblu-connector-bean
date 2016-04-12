@@ -3,8 +3,6 @@ os:
 - linux
 - osx
 addons:
-  code_climate:
-    repo_token: "d220cd4236a5f28ed7eaa865f718b4f81fa22d988644a89b3589bc019c70da1b"
   apt:
     sources:
     - ubuntu-toolchain-r-test
@@ -25,7 +23,7 @@ matrix:
   - os: osx
     env: PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="386"
 before_install:
-- PACKAGER_URL="https://meshblu-connector.octoblu.com/tools/packager/v6.0.12"
+- PACKAGER_URL="https://meshblu-connector.octoblu.com/tools/packager/v6.0.13"
 - curl -fsS "${PACKAGER_URL}/travis_install_node.sh" -o /tmp/travis_install_node.sh
 - curl -fsS "${PACKAGER_URL}/build.sh" -o /tmp/build.sh
 - chmod +x /tmp/travis_install_node.sh
@@ -33,12 +31,8 @@ before_install:
 - . /tmp/travis_install_node.sh
 install:
 - npm install --build-from-source
-before_script:
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then npm install -g codeclimate-test-reporter; fi
 script:
 - npm test
-after_script:
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then codeclimate-test-reporter < coverage/lcov.info; fi
 before_deploy:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PACKAGER_OS="darwin"; fi
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export PACKAGER_OS="linux"; fi
@@ -46,7 +40,6 @@ before_deploy:
 - export PACKAGER_CONNECTOR="$(echo "$TRAVIS_REPO_SLUG" | sed 's/^[A-Za-z0-9]*\/meshblu-connector-//g')"
 - export PACKAGER_TAG="$TRAVIS_TAG"
 - . /tmp/build.sh
-- echo "build complete"
 deploy:
 - provider: s3
   access_key_id: AKIAJH2D5IPIRHYJT5IA

@@ -1,11 +1,11 @@
 {
   "name": "meshblu-connector-bean",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "description": "Meshblu connector bean",
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/.bin/meshblu-connector-runner ./",
-    "test": "istanbul cover _mocha -- -R spec --require coffee-coverage/register-istanbul"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
