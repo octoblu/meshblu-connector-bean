@@ -25,7 +25,7 @@ matrix:
   - os: osx
     env: PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="386"
 before_install:
-- PACKAGER_URL="https://meshblu-connector.octoblu.com/tools/packager/v6.0.11"
+- PACKAGER_URL="https://meshblu-connector.octoblu.com/tools/packager/v6.0.12"
 - curl -fsS "${PACKAGER_URL}/travis_install_node.sh" -o /tmp/travis_install_node.sh
 - curl -fsS "${PACKAGER_URL}/build.sh" -o /tmp/build.sh
 - chmod +x /tmp/travis_install_node.sh
