@@ -46,6 +46,7 @@ before_deploy:
 - export PACKAGER_CONNECTOR="$(echo "$TRAVIS_REPO_SLUG" | sed 's/^[A-Za-z0-9]*\/meshblu-connector-//g')"
 - export PACKAGER_TAG="$TRAVIS_TAG"
 - . /tmp/build.sh
+- echo "build complete"
 deploy:
 - provider: s3
   access_key_id: AKIAJH2D5IPIRHYJT5IA
