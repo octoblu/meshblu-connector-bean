@@ -1,8 +1,49 @@
 # meshblu-connector-bean
-Meshblu connector bean
 
-[![Build Status](https://travis-ci.org/octoblu/meshblu-connector-bean.svg?branch=master)](https://travis-ci.org/octoblu/meshblu-connector-bean)
-[![Code Climate](https://codeclimate.com/github/octoblu/meshblu-connector-bean/badges/gpa.svg)](https://codeclimate.com/github/octoblu/meshblu-connector-bean)
-[![Test Coverage](https://codeclimate.com/github/octoblu/meshblu-connector-bean/badges/coverage.svg)](https://codeclimate.com/github/octoblu/meshblu-connector-bean)
-[![npm version](https://badge.fury.io/js/meshblu-connector-bean.svg)](http://badge.fury.io/js/meshblu-connector-bean)
-[![Gitter](https://badges.gitter.im/octoblu/help.svg)](https://gitter.im/octoblu/help)
+[![Dependency status](http://img.shields.io/david/octoblu/meshblu-connector-bean.svg?style=flat)](https://david-dm.org/octoblu/meshblu-connector-bean)
+[![devDependency Status](http://img.shields.io/david/dev/octoblu/meshblu-connector-bean.svg?style=flat)](https://david-dm.org/octoblu/meshblu-connector-bean#info=devDependencies)
+[![Build Status](http://img.shields.io/travis/octoblu/meshblu-connector-bean.svg?style=flat&branch=master)](https://travis-ci.org/octoblu/meshblu-connector-bean)
+
+[![NPM](https://nodei.co/npm/meshblu-connector-bean.svg?style=flat)](https://npmjs.org/package/meshblu-connector-bean)
+
+## Installing
+
+```bash
+$ npm install meshblu-connector-bean
+```
+
+### Usage
+
+```bash
+$ npm start
+```
+
+or with debug
+
+```bash
+$ env DEBUG='meshblu-connector-bean*' npm start
+```
+
+## License
+
+The MIT License (MIT)
+
+Copyright 2016 Octoblu Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

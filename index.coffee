@@ -1,17 +1,18 @@
-{EventEmitter2} = require 'eventemitter2'
-SCHEMA          = require './schema'
+{EventEmitter}  = require 'events'
 tinycolor       = require 'tinycolor2'
 BLEBean         = require '@octoblu/ble-bean'
 _               = require 'lodash'
 debug           = require('debug')('meshblu-connector-bean:index')
 
-class Bean extends EventEmitter2
+class Bean extends EventEmitter
   constructor: ->
     debug 'Bean constructed'
 
   start: (device) =>
-    @emit 'update', SCHEMA
     @setOptions device.options
+
+  close: (callback) =>
+    @disconnectBean callback
 
   didBeanChange: (bean) =>
     return false unless bean?
@@ -41,9 +42,9 @@ class Bean extends EventEmitter2
     @_oldBeanName = @options.localName
     @setupBean()
 
-  disconnectBean:  =>
-    return unless @_bean?
-    @_bean.disconnect =>
+  disconnectBean: (callback=->) =>
+    return callback() unless @_bean?
+    @_bean.disconnect callback
     @_bean = null
 
   pollForRssi: (bean) =>

@@ -16,48 +16,41 @@ addons:
     - libusb-1.0-0-dev
 env:
   matrix:
-  - PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="amd64" MAIN_BUILD=true
+  - PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="amd64" MAIN_BUILD="true"
   - PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="386"
 matrix:
   exclude:
   - os: osx
     env: PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="386"
+branches:
+  only:
+  - "/^v[0-9]/"
 before_install:
-- PACKAGER_URL="https://meshblu-connector.octoblu.com/tools/packager/v7.0.0"
+- PACKAGER_URL="https://meshblu-connector.octoblu.com/tools/packager/latest"
 - curl -fsS "${PACKAGER_URL}/travis_install_node.sh" -o /tmp/travis_install_node.sh
-- curl -fsS "${PACKAGER_URL}/build.sh" -o /tmp/build.sh
 - chmod +x /tmp/travis_install_node.sh
-- chmod +x /tmp/build.sh
-- . /tmp/travis_install_node.sh
+- ". /tmp/travis_install_node.sh"
+- if [ "$TRAVIS_OS_NAME" == "linux" -a "$MAIN_BUILD" == "true" ]; then export NPM_PUBLISH="true"; fi
 install:
 - npm install --build-from-source
 script:
 - npm test
 before_deploy:
-- if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PACKAGER_OS="darwin"; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ]; then export PACKAGER_OS="linux"; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" -a "$MAIN_BUILD" == "true" ]; then export NPM_PUBLISH=true; fi
-- export PACKAGER_CONNECTOR="$(echo "$TRAVIS_REPO_SLUG" | sed 's/^[A-Za-z0-9]*\/meshblu-connector-//g')"
-- export PACKAGER_TAG="$TRAVIS_TAG"
-- /tmp/build.sh
+- npm run package
 deploy:
-- provider: s3
-  access_key_id: AKIAJH2D5IPIRHYJT5IA
-  secret_access_key:
+- provider: releases
+  api_key:
     secure: "BRUrPTH9jLWLpTQ0bnOKOWtbjgG45XM8MyqE70ldB7pnFkwzUDhcNT4BhLkut2iE8l/ja78iGGZDDraN7wML686u6NoomRsaamL8oH0VneTpuqSAaY0S4TI0pmi0Z6jhd819jBCf4E4WXDOo7RJ7COg4dmAb+A/xyorq3PJkzAazZB9b+CM2fSFUHdGvste/pGL8bzkPJ4Y9Celdd1urWpq48B9ZM8CqI36/M+jRw1IhoXGtt1cY03g20pVCnUCQ38mwsAG+liEaIoI6KUFkfyb2Tdw71rScajLvSyW1H+zMRjn6/xpc4I7CWV2iZjaUgB2Knl449v5HNSGynf2rNG1DFfk1Phb/eiv8Z33rRyh5Q5W1XB9Cpy4YQOZq4pYJetIVH4aDGzPOyKOBUInYOsYzlR0ZP+FkkbCKoKa4cbzRpEqJId5jIbD72gecB/zEE/468vSKXeDZ0vQLrpL/kK9DYqsu8AawALcnI+a+RLUs6QgTOJ4wu4b2Qn+6lrnId8wHicZvsB3vqweH5rZrKnmtsLILwxlr283hOLVrlu9tJDhrDVIwEqS4FltNo6+ebCVeESFhrUB75FDBlX/w4M+nmLrHbEhKoBPgdmEGgNAxQbtm2ucN06ned3NY5zCMnxeGDGCablk7Oaliir9TzfbH4eNHjFT54M0HVONn3HA="
-  bucket: meshblu-connector
-  local-dir: deploy
-  upload-dir: connectors
-  region: us-west-2
+  file_glob: true
+  file:
+  - "deploy/*"
   skip_cleanup: true
   on:
     tags: true
-    branches: true
 - provider: npm
   email: serveradmin@octoblu.com
   api_key:
     secure: "hNjcxygKPfY/Nw9KQXtERyjx9AWBTWQiCrpUjXccK+KTW83CIE8mAHYZiXO7ZLiMxgj35hB/mu85pravrupgGhkv/mMi8ryz9q4V4dRDg55lGO0XTEemX+ReLmdR5zIY9DKMN9YXHFnX5xtmf/IhsJ9QnJojNaVstA2R750XcQKJmVcnsI/u2wFWx0Z09/VxGK/HKm0kYJDUCVdOE19QQGVnyAyWV4208NCHP3jmByf1JhYkQbQXnD8eijdO8HqnE2Ss19+dalRtzc9PkYxH9oXUuKMgjDLz3ngMWCFBJPiNpptW8ABs/d5vu8OFJknPwoDOQ/AEDqSSulrIEjhdkdTSQZgfKQajCVCdV2Jotao3iOamGRxkVsSDnbQ416DKPtfVRYNeK+wksWk+oU20x2aKeGbVitjYOnLE5LdUNlAEH9omdexHchQYSvznk+dZRGLrdD4Eiy/zWApVmGx2G1tl12rH1ogS0ONbSIE/c65jAxgBv1qh8xWPZukb1sTMYkw9rRqcotyWoTeL5Q6exlpMQljUwwARXiGp78bgT8DKHj4KFHvNM+Mqutt91Z4YC2Tp6NHZXylc6JmTWPSr2xdn43WECbl/9UZv2E3t0Sd8pslKxoqHQ9Z7utHVrAX22vZOs2Lt9d9grdnxHWMvK60u/kT7g3PDG6RDpXV1ldY="
   on:
     tags: true
-    condition: "$NPM_PUBLISH == true"
-    branches: true
+    condition: "$NPM_PUBLISH = true"

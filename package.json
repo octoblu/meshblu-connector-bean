@@ -1,33 +1,28 @@
 {
   "name": "meshblu-connector-bean",
-  "version": "2.0.18",
+  "version": "3.0.0",
   "description": "Meshblu connector bean",
-  "main": "index.js",
-  "scripts": {
-    "start": "./node_modules/.bin/meshblu-connector-runner ./",
-    "test": "mocha"
+  "homepage": "https://github.com/octoblu/bean",
+  "bugs": "https://github.com/octoblu/bean/issues",
+  "author": {
+    "name": "Octoblu",
+    "url": "https://github.com/octoblu"
   },
+  "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/octoblu/meshblu-connector-bean.git"
+    "url": "https://github.com/octoblu/bean.git"
   },
-  "keywords": [
-    "meshblu",
-    "connector"
-  ],
-  "author": "Octoblu, Inc. <npm@octoblu.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/octoblu/meshblu-connector-bean/issues"
+  "scripts": {
+    "start": "meshblu-connector-runner ./",
+    "test": "mocha",
+    "package": "meshblu-connector-packager"
   },
-  "homepage": "https://github.com/octoblu/meshblu-connector-bean#readme",
   "devDependencies": {
     "chai": "^3.5.0",
     "coffee-coverage": "^1.0.1",
-    "istanbul": "^0.4.2",
-    "meshblu-connector-runner": "^1.0.7",
+    "meshblu-connector-packager": "^11.0.3",
     "mocha": "^2.4.5",
-    "mocha-istanbul": "^0.2.0",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0"
   },
@@ -36,9 +31,29 @@
     "coffee-script": "^1.10.0",
     "debug": "^2.2.0",
     "eventemitter2": "^1.0.0",
-    "lodash": "^4.6.1",
+    "lodash": "^4.11.1",
     "meshblu-connector-runner": "^2.0.0",
-    "noble": "^1.3.0",
+    "noble": "^1.5.0",
     "tinycolor2": "^1.3.0"
-  }
+  },
+  "meshbluConnector": {
+    "connectorAssemblerVersion": "v7.0.0",
+    "dependencyManagerVersion": "v1.0.7",
+    "ignitionVersion": "v1.0.6",
+    "githubSlug": "octoblu/meshblu-connector-bean",
+    "schemasUrl": "https://raw.githubusercontent.com/octoblu/meshblu-connector-bean/v3.0.0/schemas.json"
+  },
+  "platformDependencies": {
+    "darwin": [],
+    "win32": [],
+    "win64": [],
+    "linux": [],
+    "android": [],
+    "ios": []
+  },
+  "license": "MIT",
+  "keywords": [
+    "meshblu-connector",
+    "gateblu"
+  ]
 }
