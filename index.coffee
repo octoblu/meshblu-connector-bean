@@ -8,6 +8,9 @@ class Bean extends EventEmitter
   constructor: ->
     debug 'Bean constructed'
 
+  isOnline: (callback) =>
+    callback null, running: @_bean?
+
   start: (device) =>
     @setOptions device.options
 
@@ -29,10 +32,12 @@ class Bean extends EventEmitter
         callback(null, bean)
 
   onMessage: (message) =>
+    return unless message?
     debug 'onMessage', message
     @updateBean message.payload
 
   onConfig: (device) =>
+    return unless device?
     debug 'onConfig', device.options
     @setOptions device.options
 

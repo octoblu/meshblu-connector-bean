@@ -24,6 +24,12 @@ or with debug
 $ env DEBUG='meshblu-connector-bean*' npm start
 ```
 
+### Releasing
+
+```bash
+$ npm run package
+```
+
 ## License
 
 The MIT License (MIT)
