@@ -1,8 +1,8 @@
 {
   "schemas": {
     "version": "1.0.0",
-    "messages": [
-      {
+    "message": {
+      "turn-on-light": {
         "title": "Turn on Light",
         "type": "object",
         "properties": {
@@ -14,63 +14,66 @@
           }
         }
       }
-    ],
+    },
     "configure": {
-      "type": "object",
-      "properties": {
-        "options" : {
-          "type" : "object",
-          "properties" : {
-            "localName": {
-              "type": "string"
-            },
-            "broadcastAccel": {
-              "type": "boolean",
-              "default": false
-            },
-            "broadcastTemp": {
-              "type": "boolean",
-              "default": false
-            },
-            "broadcastRSSI": {
-              "type": "boolean",
-              "default": false
-            },
-            "notifyScratch1": {
-              "type": "boolean",
-              "default": false
-            },
-            "notifyScratch2": {
-              "type": "boolean",
-              "default": false
-            },
-            "notifyScratch3": {
-              "type": "boolean",
-              "default": false
-            },
-            "notifyScratch4": {
-              "type": "boolean",
-              "default": false
-            },
-            "notifyScratch5": {
-              "type": "boolean",
-              "default": false
-            },
-            "broadcastAccelInterval": {
-              "type": "integer",
-              "default": 5000
-            },
-            "broadcastTempInterval": {
-              "type": "integer",
-              "default": 5000
-            },
-            "broadcastRSSIInterval": {
-              "type": "integer",
-              "default": 5000
-            },
-            "timeout": {
-              "type": "integer",
-              "default": 30000
+      "default-config": {
+        "title": "Default Config",
+        "type": "object",
+        "properties": {
+          "options" : {
+            "type" : "object",
+            "properties" : {
+              "localName": {
+                "type": "string"
+              },
+              "broadcastAccel": {
+                "type": "boolean",
+                "default": false
+              },
+              "broadcastTemp": {
+                "type": "boolean",
+                "default": false
+              },
+              "broadcastRSSI": {
+                "type": "boolean",
+                "default": false
+              },
+              "notifyScratch1": {
+                "type": "boolean",
+                "default": false
+              },
+              "notifyScratch2": {
+                "type": "boolean",
+                "default": false
+              },
+              "notifyScratch3": {
+                "type": "boolean",
+                "default": false
+              },
+              "notifyScratch4": {
+                "type": "boolean",
+                "default": false
+              },
+              "notifyScratch5": {
+                "type": "boolean",
+                "default": false
+              },
+              "broadcastAccelInterval": {
+                "type": "integer",
+                "default": 5000
+              },
+              "broadcastTempInterval": {
+                "type": "integer",
+                "default": 5000
+              },
+              "broadcastRSSIInterval": {
+                "type": "integer",
+                "default": 5000
+              },
+              "timeout": {
+                "type": "integer",
+                "default": 30000
+              }
             }
           }
         }

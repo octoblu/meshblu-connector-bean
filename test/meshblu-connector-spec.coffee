@@ -20,14 +20,7 @@ describe 'Bean', ->
     it 'should be a method', ->
       expect(@sut.isOnline).to.be.a 'function'
 
-    it 'should yield running false at first', (done) ->
-      @sut.isOnline (error, response) =>
-        return done error if error?
-        expect(response.running).to.be.false
-        done()
-
-    it 'should yield running true if _bean', (done) ->
-      @sut._bean = true
+    it 'should yield running true', (done) ->
       @sut.isOnline (error, response) =>
         return done error if error?
         expect(response.running).to.be.true
@@ -44,10 +37,6 @@ describe 'Bean', ->
     it 'should be a method', ->
       expect(@sut.onMessage).to.be.a 'function'
 
-    describe 'when called with nothing', ->
-      it 'should not throw an error', ->
-        expect(@sut.onMessage).to.not.throw(Error)
-
     describe 'when called with a message', ->
       it 'should not throw an error', ->
         expect(=> @sut.onMessage({ topic: 'hello', devices: ['123'] })).to.not.throw(Error)
@@ -55,10 +44,6 @@ describe 'Bean', ->
   describe '->onConfig', ->
     it 'should be a method', ->
       expect(@sut.onConfig).to.be.a 'function'
-
-    describe 'when called with nothing', ->
-      it 'should not throw an error', ->
-        expect(@sut.onConfig).to.not.throw(Error)
 
     describe 'when called with a config', ->
       it 'should not throw an error', ->
