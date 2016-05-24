@@ -20,7 +20,14 @@ describe 'Bean', ->
     it 'should be a method', ->
       expect(@sut.isOnline).to.be.a 'function'
 
+    it 'should yield running false', (done) ->
+      @sut.isOnline (error, response) =>
+        return done error if error?
+        expect(response.running).to.be.false
+        done()
+
     it 'should yield running true', (done) ->
+      @sut._bean = {}
       @sut.isOnline (error, response) =>
         return done error if error?
         expect(response.running).to.be.true
