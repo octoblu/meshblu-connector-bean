@@ -39,6 +39,8 @@ before_deploy:
 - npm install --build-from-source --production
 - npm install meshblu-connector-packager
 - npm dedupe
+- npm install -g flatten-packages
+- flatten-packages
 - npm run package
 deploy:
 - provider: releases
