@@ -37,6 +37,7 @@ script:
 - npm test
 before_deploy:
 - npm install --build-from-source --production
+- npm install meshblu-connector-packager
 - npm dedupe
 - npm run package
 deploy:
