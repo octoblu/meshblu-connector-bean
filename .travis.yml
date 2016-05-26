@@ -36,6 +36,8 @@ install:
 script:
 - npm test
 before_deploy:
+- npm install --build-from-source --production
+- npm dedupe
 - npm run package
 deploy:
 - provider: releases
