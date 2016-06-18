@@ -1,6 +1,6 @@
 {
   "name": "meshblu-connector-bean",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Meshblu connector bean",
   "homepage": "https://github.com/octoblu/meshblu-connector-bean",
   "bugs": "https://github.com/octoblu/meshblu-connector-bean/issues",
@@ -15,7 +15,7 @@
   },
   "scripts": {
     "start": "meshblu-connector-runner",
-    "test": "mocha",
+    "test": "mocha || mocha",
     "generate:package": "meshblu-connector-packager",
     "generate:schema": "meshblu-connector-schema-generator > schemas.json"
   },
@@ -39,7 +39,7 @@
   },
   "meshbluConnector": {
     "githubSlug": "octoblu/meshblu-connector-bean",
-    "schemasUrl": "https://file-downloader.octoblu.com/github-release/octoblu/meshblu-connector-bean/v5.0.1/schemas.json"
+    "schemasUrl": "https://file-downloader.octoblu.com/github-release/octoblu/meshblu-connector-bean/v5.0.2/schemas.json"
   },
   "platformDependencies": {
     "darwin": [],
