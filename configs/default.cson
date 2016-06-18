@@ -1,0 +1,54 @@
+title: "Default Configuration"
+type: "object"
+properties:
+  options:
+    type: "object"
+    properties:
+      localName:
+        type: "string"
+      interval:
+        type: "object"
+        properties:
+          accelerometer:
+            type: "integer"
+            title: "Accelerometer Interval"
+            description: "Broadcast rate for accelerometer data"
+            default: 0
+          temperature:
+            type: "integer"
+            title: "Temperature Interval"
+            description: "Broadcast rate for temperature data"
+            default: 0
+          rssi:
+            type: "integer"
+            title: "RSSI Interval"
+            description: "Broadcast rate for rssi"
+            default: 0
+      notify:
+        type: "object"
+        properties:
+          scratch1:
+            type: "boolean"
+            title: "Notify scratch1"
+            description: "Notify when scratch1 changes"
+            default: false
+          scratch2:
+            type: "boolean"
+            title: "Notify scratch2"
+            description: "Notify when scratch2 changes"
+            default: false
+          scratch3:
+            type: "boolean"
+            title: "Notify scratch3"
+            description: "Notify when scratch3 changes"
+            default: false
+          scratch4:
+            type: "boolean"
+            title: "Notify scratch4"
+            description: "Notify when scratch3 changes"
+            default: false
+          scratch5:
+            type: "boolean"
+            title: "Notify scratch5"
+            description: "Notify when scratch5 changes"
+            default: false

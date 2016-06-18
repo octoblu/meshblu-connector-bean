@@ -1,6 +1,6 @@
 {
   "name": "meshblu-connector-bean",
-  "version": "4.0.3",
+  "version": "5.0.0",
   "description": "Meshblu connector bean",
   "homepage": "https://github.com/octoblu/bean",
   "bugs": "https://github.com/octoblu/bean/issues",
@@ -16,7 +16,9 @@
   "scripts": {
     "start": "meshblu-connector-runner",
     "test": "mocha",
-    "package": "meshblu-connector-packager"
+    "package": "meshblu-connector-packager",
+    "generate:package": "meshblu-connector-packager",
+    "generate:schema": "meshblu-connector-schema-generator > schemas.json"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -30,10 +32,11 @@
     "coffee-script": "^1.10.0",
     "debug": "^2.2.0",
     "lodash": "^4.11.1",
-    "meshblu-connector-runner": "^6.0.0",
+    "meshblu-connector-runner": "^7.0.0",
     "noble": "^1.5.0",
     "tinycolor2": "^1.3.0",
-    "meshblu-config": "^4.0.0"
+    "meshblu-config": "^4.0.0",
+    "fs-cson": "^0.3.2"
   },
   "meshbluConnector": {
     "githubSlug": "octoblu/meshblu-connector-bean",
@@ -44,8 +47,8 @@
     "win32": [],
     "win64": [],
     "linux": [],
-    "android": [],
-    "ios": []
+    "android": null,
+    "ios": null
   },
   "license": "MIT",
   "keywords": [
