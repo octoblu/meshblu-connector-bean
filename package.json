@@ -1,9 +1,9 @@
 {
   "name": "meshblu-connector-bean",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Meshblu connector bean",
-  "homepage": "https://github.com/octoblu/bean",
-  "bugs": "https://github.com/octoblu/bean/issues",
+  "homepage": "https://github.com/octoblu/meshblu-connector-bean",
+  "bugs": "https://github.com/octoblu/meshblu-connector-bean/issues",
   "author": {
     "name": "Octoblu",
     "url": "https://github.com/octoblu"
@@ -11,12 +11,11 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/octoblu/bean.git"
+    "url": "https://github.com/octoblu/meshblu-connector-bean.git"
   },
   "scripts": {
     "start": "meshblu-connector-runner",
     "test": "mocha",
-    "package": "meshblu-connector-packager",
     "generate:package": "meshblu-connector-packager",
     "generate:schema": "meshblu-connector-schema-generator > schemas.json"
   },
@@ -40,7 +39,7 @@
   },
   "meshbluConnector": {
     "githubSlug": "octoblu/meshblu-connector-bean",
-    "schemasUrl": "https://raw.githubusercontent.com/octoblu/meshblu-connector-bean/v3.1.0/schemas.json"
+    "schemasUrl": "https://file-downloader.octoblu.com/github-release/octoblu/meshblu-connector-bean/v5.0.1/schemas.json"
   },
   "platformDependencies": {
     "darwin": [],
