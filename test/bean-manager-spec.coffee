@@ -8,6 +8,7 @@ describe 'BeanManager', ->
     @bean._peripheral.advertisement = localName: 'hello'
     @bean.connectAndSetup = sinon.stub().yields null
     @sut = new BeanManager
+    @sut.BLEBean = {}
     {@BLEBean} = @sut
     @BLEBean.discover = sinon.stub().yields @bean
 
