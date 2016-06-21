@@ -1,9 +1,13 @@
 {EventEmitter}  = require 'events'
 tinycolor       = require 'tinycolor2'
-BLEBean         = require '@octoblu/ble-bean'
 _               = require 'lodash'
 async           = require 'async'
 debug           = require('debug')('meshblu-connector-bean:bean-manager')
+try
+  unless process.env.SKIP_REQUIRE_BEAN == 'true'
+    BLEBean = require '@octoblu/ble-bean'
+catch error
+  console.error error
 
 class BeanManager extends EventEmitter
   constructor: ->
