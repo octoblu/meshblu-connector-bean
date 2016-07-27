@@ -17,22 +17,33 @@ class BeanManager extends EventEmitter
     rgb = tinycolor(color).toRgb();
     @bean.setColor new Buffer([rgb.r, rgb.g, rgb.b]), callback
 
+  close: (callback) =>
+    clearInterval @intervalPollForRssi
+    callback()
+
+  setup: ({@localName,@interval,@notify}, callback) =>
+    @_cleanupConnection (error) =>
+      return callback error if error?
+      @_connect callback
+
+  turnOff: (callback) =>
+    @changeLight color: 'black', callback
+
   _cleanupConnection: (callback) =>
     return callback() unless @bean?
     return callback() if @localName == @bean._peripheral.advertisement.localName
     @bean.disconnect callback
     @bean = null
 
-  close: (callback) =>
-    clearInterval @intervalPollForRssi
-    callback()
-
   _connect: (callback) =>
     @BLEBean.is = (peripheral) =>
       peripheral.advertisement.localName == @localName
 
+    debug 'discover'
     @BLEBean.discover (@bean) =>
+      debug 'discovered: ', @bean.id
       @bean.connectAndSetup =>
+        debug 'connected (and setup): ', @bean.id
         @_initialize callback
 
   _initialize: (callback) =>
@@ -41,11 +52,11 @@ class BeanManager extends EventEmitter
       @_initializeOnRssi
       @_initializeOnAccelerometer
       @_initializeOnTemperature
-      async.apply @_initializeNotifyScratch, 'scratch1', @bean.notifyOne
-      async.apply @_initializeNotifyScratch, 'scratch2', @bean.notifyTwo
-      async.apply @_initializeNotifyScratch, 'scratch3', @bean.notifyThree
-      async.apply @_initializeNotifyScratch, 'scratch4', @bean.notifyFour
-      async.apply @_initializeNotifyScratch, 'scratch5', @bean.notifyFive
+      async.apply @_initializeNotifyScratch, 'scratch1', @_notifyOne
+      async.apply @_initializeNotifyScratch, 'scratch2', @_notifyTwo
+      async.apply @_initializeNotifyScratch, 'scratch3', @_notifyThree
+      async.apply @_initializeNotifyScratch, 'scratch4', @_notifyFour
+      async.apply @_initializeNotifyScratch, 'scratch5', @_notifyFive
     ]
     async.series tasks, callback
 
@@ -82,12 +93,11 @@ class BeanManager extends EventEmitter
     , _.noop
     callback()
 
-  _pollForRssi: =>
-    return unless @bean?
-    @bean._peripheral.updateRssi (error, rssi) =>
-      return console.error error.stack if error?
-      debug 'rssi data', {rssi}
-      @emit 'data', {rssi}
+  _notifyOne:   => @bean.notifyOne arguments...
+  _notifyTwo:   => @bean.notifyTwo arguments...
+  _notifyThree: => @bean.notifyThree arguments...
+  _notifyFour:  => @bean.notifyFour arguments...
+  _notifyFive:  => @bean.notifyFive arguments...
 
   _onAccelerometer: (x, y, z)=>
     data =
@@ -106,12 +116,11 @@ class BeanManager extends EventEmitter
     debug 'temp data', data
     @emit 'data', data
 
-  setup: ({@localName,@interval,@notify}, callback) =>
-    @_cleanupConnection (error) =>
-      return callback error if error?
-      @_connect callback
-
-  turnOff: (callback) =>
-    @changeLight color: 'black', callback
+  _pollForRssi: =>
+    return unless @bean?
+    @bean._peripheral.updateRssi (error, rssi) =>
+      return console.error error.stack if error?
+      debug 'rssi data', {rssi}
+      @emit 'data', {rssi}
 
 module.exports = BeanManager

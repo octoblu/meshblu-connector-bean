@@ -19,7 +19,10 @@ class Connector extends EventEmitter
   onConfig: (device={}, callback=->) =>
     { @options } = device
     debug 'on config', @options
-    callback()
+    {localName,interval,notify} = @options
+    @bean.setup {localName, interval, notify}, (error) =>
+      debug 'setup complete', error
+      callback error
 
   start: (device, callback) =>
     debug 'started'
