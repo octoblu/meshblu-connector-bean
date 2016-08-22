@@ -14,7 +14,8 @@ class BeanManager extends EventEmitter
     @BLEBean = BLEBean
 
   changeLight: ({color}, callback) =>
-    rgb = tinycolor(color).toRgb();
+    rgb = tinycolor(color).toRgb()
+    return callback new Error('No Bean Connected') unless @bean?
     @bean.setColor new Buffer([rgb.r, rgb.g, rgb.b]), callback
 
   close: (callback) =>
