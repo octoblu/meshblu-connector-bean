@@ -4,6 +4,11 @@ BeanManager = require '../src/bean-manager'
 describe 'BeanManager', ->
   beforeEach ->
     @bean = new EventEmitter
+    @bean.notifyOne = sinon.stub()
+    @bean.notifyTwo = sinon.stub()
+    @bean.notifyThree = sinon.stub()
+    @bean.notifyFour = sinon.stub()
+    @bean.notifyFive = sinon.stub()
     @bean._peripheral = {}
     @bean._peripheral.advertisement = localName: 'hello'
     @bean.connectAndSetup = sinon.stub().yields null

@@ -14,10 +14,11 @@ class Connector extends EventEmitter
 
   close: (callback) =>
     debug 'on close'
-    callback()
+    @bean.close callback
 
   onConfig: (device={}, callback=->) =>
     { @options } = device
+    @options ?= {}
     debug 'on config', @options
     {localName,interval,notify} = @options
     @bean.setup {localName, interval, notify}, (error) =>

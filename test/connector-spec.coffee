@@ -6,6 +6,7 @@ describe 'Connector', ->
     {@bean} = @sut
     @bean.turnLightOff = sinon.stub().yields null
     @bean.changeLight = sinon.stub().yields null
+    @bean.setup = sinon.stub().yields null
     @sut.start {}, done
 
   afterEach (done) ->
@@ -13,7 +14,9 @@ describe 'Connector', ->
 
   describe '->on bean.data', ->
     beforeEach (done) ->
-      @sut.start {}, done
+      options =
+        localName: 'foo'
+      @sut.start {options}, done
 
     beforeEach (done) ->
       @sut.emit = sinon.stub()
