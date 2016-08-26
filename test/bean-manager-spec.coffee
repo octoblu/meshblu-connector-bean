@@ -70,6 +70,7 @@ describe 'BeanManager', ->
         options =
           localName: 'rssi'
           interval:
+            rssi_enable: true
             rssi: 1
         @sut.setup options, done
 
@@ -92,6 +93,7 @@ describe 'BeanManager', ->
         options =
           localName: 'accelerometer'
           interval:
+            accel_enable: true
             accelerometer: 1
         @sut.setup options, done
 
@@ -128,6 +130,7 @@ describe 'BeanManager', ->
         options =
           localName: 'temperature'
           interval:
+            temp_enable: true
             temperature: 1
         @sut.setup options, done
 
@@ -302,13 +305,13 @@ describe 'BeanManager', ->
     it 'should call bean.setColor', ->
       expect(@bean.setColor).to.have.been.called
 
-  describe '->turnOff', ->
+  describe '->turnLightOff', ->
     beforeEach (done) ->
       @sut.setup {}, done
 
     beforeEach (done) ->
       @bean.setColor = sinon.stub().yields null
-      @sut.turnOff done
+      @sut.turnLightOff done
 
     it 'should call bean.setColor', ->
       expect(@bean.setColor).to.have.been.called

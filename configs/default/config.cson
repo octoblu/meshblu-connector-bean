@@ -9,21 +9,36 @@ properties:
       interval:
         type: "object"
         properties:
+          accel_enable:
+            type: "boolean"
+            title: "Enable Accelerometer?"
+            default: false
           accelerometer:
             type: "integer"
             title: "Accelerometer Interval"
             description: "Broadcast rate for accelerometer data"
-            default: 0
+            minimum: 100
+            default: 1000
+          temp_enable:
+            type: "boolean"
+            title: "Enable Temperature?"
+            default: false
           temperature:
             type: "integer"
             title: "Temperature Interval"
             description: "Broadcast rate for temperature data"
-            default: 0
+            minimum: 200
+            default: 100
+          rssi_enable:
+            type: "boolean"
+            title: "Enable RSSI?"
+            default: false
           rssi:
             type: "integer"
             title: "RSSI Interval"
             description: "Broadcast rate for rssi"
-            default: 0
+            minimum: 100
+            default: 1000
       notify:
         type: "object"
         properties:

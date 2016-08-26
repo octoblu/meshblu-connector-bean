@@ -1,7 +1,10 @@
 angular: [
   { key: 'options.localName' }
+  { key: 'options.interval.accel_enable' }
   { key: 'options.interval.accelerometer' }
+  { key: 'options.interval.temp_enable' }
   { key: 'options.interval.temperature' }
+  { key: 'options.interval.rssi_enable' }
   { key: 'options.interval.rssi' }
   { key: 'options.notify.scratch1' }
   { key: 'options.notify.scratch2' }

@@ -20,7 +20,8 @@ class Connector extends EventEmitter
     { @options } = device
     @options ?= {}
     debug 'on config', @options
-    {localName,interval,notify} = @options
+    { localName, interval, notify } = @options
+    interval = @_checkEnabledIntervals interval unless !interval?
     @bean.setup {localName, interval, notify}, (error) =>
       debug 'setup complete', error
       callback error
@@ -36,5 +37,12 @@ class Connector extends EventEmitter
 
   turnLightOff: (callback) =>
     @bean.turnLightOff callback
+
+  _checkEnabledIntervals: (interval) =>
+    { accel_enable, temp_enable, rssi_enable } = interval
+    interval.accelerometer = 0 if accel_enable == false && accel_enable?
+    interval.temperature = 0 if temp_enable == false && temp_enable?
+    interval.rssi = 0 if rssi_enable == false && rssi_enable?
+    return interval
 
 module.exports = Connector

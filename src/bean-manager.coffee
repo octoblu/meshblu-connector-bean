@@ -27,7 +27,7 @@ class BeanManager extends EventEmitter
       return callback error if error?
       @_connect callback
 
-  turnOff: (callback) =>
+  turnLightOff: (callback) =>
     @changeLight color: 'black', callback
 
   _cleanupConnection: (callback) =>
